@@ -11,6 +11,7 @@ border-radius: 30px;
 background: white;
 @media (max-width: 1300px) {
   width: 60%
+  height:20%
 }
 `
 
