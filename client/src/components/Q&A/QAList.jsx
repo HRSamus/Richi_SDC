@@ -66,7 +66,7 @@ const QAList = ({ search, product}) => {
       headers: { Authorization: TOKEN }
     })
       .then((res) => {
-        console.log('productid', product.id)
+        //console.log('productid', product.id)
         let answeredQuestions = res.data.results.filter((question) => {
           if(search.length > 3) {
             return question.question_body.includes(search);

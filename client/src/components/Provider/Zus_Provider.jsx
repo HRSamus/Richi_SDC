@@ -29,7 +29,7 @@ const ProductStore2 = create((set, get) => ({
   curStyle: null,
   curStars: null,
   getProducts: () => {
-    GetRequest('/products')
+    GetRequest('/products') //WORKING
     .then(({data}) => {
       set(() => ({Products: data}));
       get().setCurProduct(data[0].name);
@@ -39,8 +39,9 @@ const ProductStore2 = create((set, get) => ({
     get().Products.map((info)=> {
       if (info.name === title) {
         get().setStars(info.id);
-        GetRequest(`/products/${info.id}`)
+        GetRequest(`/products/${info.id}`) //get features for products
         .then(({data}) => {
+          console.log(data)
           set(() => ({curProduct: data}))
           get().setCurStyles(data);
         })

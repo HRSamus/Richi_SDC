@@ -49,8 +49,8 @@ const postInteractionsAPI = (data) => {
     data: data,
     signal: controller.signal
   })
-  .then(res=>{console.log('interactions API posted:', data)})
-  .catch(err=>console.log('failed to post userclick to Interactions API'));
+  //.then(res=>{console.log('interactions API posted:', data)})
+  //.catch(err=>console.log('failed to post userclick to Interactions API'));
   controller.abort()
 }
 

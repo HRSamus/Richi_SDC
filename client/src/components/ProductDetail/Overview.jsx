@@ -30,7 +30,7 @@ const Overview = () => {
   const setup = ProductStore((state) => state.getProducts);
 
   useEffect(() => {
-    console.log('Running!');
+   // console.log('Running!');
     setup();
   }, [])
 
