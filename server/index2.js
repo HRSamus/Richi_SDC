@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const path = require("path");
 const db = require("./db.js");
-const { selectProduct } = require("./db.js")
+const { selectProduct, selectOneProduct, features } = require("./db.js")
 
 const app = express();
 app.use(express.json());
@@ -23,7 +23,14 @@ app.get('/*', (req, res) => {
     res.send(id)
   } else if (req.url.slice(10)) { //products/${info.id}
     let id = req.url.slice(10)
-    res.send(id)
+    let temp;
+    selectOneProduct(id)
+      .then((data) => { temp = data.rows })
+      .catch((err) => console.log(err))
+    features(id)
+      .then((data) => { temp[0]['features'] = data.rows })
+      .catch((err) => console.log(err))
+      .then(() => res.send(temp))
   } else { //products
     selectProduct()
       .then((data) => res.send(data.rows))

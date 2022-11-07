@@ -10,19 +10,30 @@ const db = new Client({
 })
 
 db.connect()
-  .then((res) => console.log('Database connected'))
+  .then(() => console.log('Database connected'))
   .catch((err) => console.log('Error connecting ', err))
-
-
-
 
 const selectProduct = () => {
   return db.query(`SELECT * FROM products FETCH FIRST 5 ROWS ONLY`)
 }
-// selectProduct()
 
-//FETCH FIRST 10 ROWS ONLY
-//.then(() => db.end());
+const selectOneProduct = (id) => {
+  return db.query(`SELECT * FROM products WHERE products.id = ${id}`)
+
+  // .then((data) => temp = data.rows)
+  // .catch((err) => console.log(err))
+  // .then(() => db.query(`SELECT * FROM features WHERE features.product_id = ${id}`))
+  // .then((data) => temp[0]['features'] = data.rows)
+  // .catch((err) => console.log(err))
+}
+const features = (id) => {
+  return db.query(`SELECT feature, value FROM features WHERE features.product_id = ${id}`)
+}
+
 
 module.exports = db;
-module.exports = { selectProduct }
+module.exports = { selectProduct, selectOneProduct, features }
+
+// Notes
+//FETCH FIRST 10 ROWS ONLY
+//.then(() => db.end());
