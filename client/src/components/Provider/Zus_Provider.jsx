@@ -39,7 +39,7 @@ const ProductStore2 = create((set, get) => ({
     get().Products.map((info)=> {
       if (info.name === title) {
         get().setStars(info.id);
-        GetRequest(`/products/${info.id}`) //get features for products
+        GetRequest(`/products/${info.id}`) //get features for products WORKING
         .then(({data}) => {
           console.log(data)
           set(() => ({curProduct: data}))
@@ -49,7 +49,7 @@ const ProductStore2 = create((set, get) => ({
     })
   },
   setCurStyles: (data) => {
-    GetRequest(`/products/${data.id}/styles`)
+    GetRequest(`/products/${data.id}/styles`) // get styles for product
     .then(({data}) => {
       set(() => ({curProductStyles: data.results}));
       console.log("🚀 ~ file: Zus_Provider.jsx ~ line 54 ~ .then ~ data", data)
@@ -73,8 +73,9 @@ const ProductStore2 = create((set, get) => ({
     set(() => ({curProductStyles: product.styles.data.results}));
   },
   setStars: (id) => {
-    GetRequest(`/reviews/meta/?product_id=${id}`)
+    GetRequest(`/reviews/meta/?product_id=${id}`) //get reviews for product
     .then(({data}) => {
+      //console.log(data)
       let holder = WeightedAvg(data.ratings);
       set(() => ({curStars: holder}))
     })

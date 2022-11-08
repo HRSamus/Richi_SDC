@@ -19,20 +19,44 @@ const selectProduct = () => {
 
 const selectOneProduct = (id) => {
   return db.query(`SELECT * FROM products WHERE products.id = ${id}`)
-
-  // .then((data) => temp = data.rows)
-  // .catch((err) => console.log(err))
-  // .then(() => db.query(`SELECT * FROM features WHERE features.product_id = ${id}`))
-  // .then((data) => temp[0]['features'] = data.rows)
-  // .catch((err) => console.log(err))
 }
 const features = (id) => {
   return db.query(`SELECT feature, value FROM features WHERE features.product_id = ${id}`)
 }
+const styles = (id) => {
+  return db.query(`SELECT s.style_id, product_id, style_name AS name, sale_price, original_price, default_style AS "default?",
+  pl.photos, sl.skus FROM styles s,
+    LATERAL (
+        SELECT ARRAY (
+          SELECT json_build_object('url', url, 'thumbnail_url', thumbnail_url) FROM photos p
+          WHERE p.style_id = s.style_id
+        ) AS photos
+    ) pl,
+    LATERAL (
+        SELECT ARRAY (
+          SELECT json_build_object('size', size, 'quantity', quantity) FROM skus sk
+          WHERE sk.style_id = s.style_id
+      ) AS skus
+    ) sl WHERE s.product_id = ${id}
+    `)
 
+}
+const photos = (id) => {
+  return db.query(`SELECT url, thumbnail_url FROM photos WHERE photos.style_id = ${id}`)
+}
+const skus = (id) => {
+  return db.query(
+    `SELECT size, quantity FROM skus WHERE skus.style_id = ${id}`
+  )
+}
+//WHERE styles.product_id = ${id}
+//INNER JOIN photos ON styles.style_id = photos.style_id
+//WHERE styles.product_id = ${id}
+//INNER JOIN skus ON styles.style_id = skus.style_id
 
+//WHERE s.product_id = ${id}
 module.exports = db;
-module.exports = { selectProduct, selectOneProduct, features }
+module.exports = { selectProduct, selectOneProduct, features, styles, photos, skus }
 
 // Notes
 //FETCH FIRST 10 ROWS ONLY
