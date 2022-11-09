@@ -39,16 +39,8 @@ const styles = (id) => {
       ) AS skus
     ) sl WHERE s.product_id = ${id}
     `)
+}
 
-}
-const photos = (id) => {
-  return db.query(`SELECT url, thumbnail_url FROM photos WHERE photos.style_id = ${id}`)
-}
-const skus = (id) => {
-  return db.query(
-    `SELECT size, quantity FROM skus WHERE skus.style_id = ${id}`
-  )
-}
 //WHERE styles.product_id = ${id}
 //INNER JOIN photos ON styles.style_id = photos.style_id
 //WHERE styles.product_id = ${id}
@@ -56,7 +48,7 @@ const skus = (id) => {
 
 //WHERE s.product_id = ${id}
 module.exports = db;
-module.exports = { selectProduct, selectOneProduct, features, styles, photos, skus }
+module.exports = { selectProduct, selectOneProduct, features, styles }
 
 // Notes
 //FETCH FIRST 10 ROWS ONLY
